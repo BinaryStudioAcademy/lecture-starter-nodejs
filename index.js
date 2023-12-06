@@ -14,7 +14,7 @@ initRoutes(app);
 
 app.use("/", express.static("./client/build"));
 
-const port = 3050;
+const port = 3080;
 app.listen(port, () => {});
 
 export { app };
