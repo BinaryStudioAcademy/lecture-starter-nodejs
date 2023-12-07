@@ -23,7 +23,7 @@
     "lodash.isempty": "4.4.0",
     "lowdb": "1.0.0",
     "request": "2.88.2",
-    "uuid": "9.0.0"
+    "uuid": "9.0.1"
   },
   "engines": {
     "node": "16.x.x",
