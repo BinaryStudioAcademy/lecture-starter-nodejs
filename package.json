@@ -8,6 +8,7 @@
     "test": "sh -c 'env REPO_URL=$0 npx mocha tests/**/*.spec.js -R JSON --exit'",
     "test-local": "./node_modules/.bin/mocha tests/**/*.spec.js --exit -R JSON",
     "start": "node index.js",
+    "start:dev": "nodemon index.js",
     "build-front": "cd client | ls",
     "feedback": "node ./feedback/index.js",
     "generate": "npm run test-local | npm run feedback"
@@ -28,5 +29,8 @@
   "engines": {
     "node": "16.x.x",
     "npm": "8.x.x"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
   }
 }

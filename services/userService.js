@@ -1,14 +1,30 @@
-import { userRepository } from "../repositories/userRepository.js";
+import { userRepository } from '../repositories/userRepository.js';
 
 class UserService {
-  // TODO: Implement methods to work with user
+  getAllUsers() {
+    return userRepository.getAll();
+  }
 
-  search(search) {
-    const item = userRepository.getOne(search);
-    if (!item) {
-      return null;
-    }
-    return item;
+  search(queryObj) {
+    const item = userRepository.getOne(queryObj);
+    return item ? item : null;
+  }
+
+  register(data) {
+    return userRepository.create(data);
+  }
+
+  editUser(id, dataToUpdate) {
+    return userRepository.update(id, dataToUpdate);
+  }
+
+  deleteUser(id) {
+    const doesExist = this.search({ id });
+    console.log('doesExist: ', doesExist);
+    if (!doesExist) return null;
+
+    const [deletedUser] = userRepository.delete(id);
+    return deletedUser;
   }
 }
 
