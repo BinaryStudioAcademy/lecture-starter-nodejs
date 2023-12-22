@@ -5,6 +5,7 @@ class UserService {
     return userRepository.getAll();
   }
 
+  // Search users by one or more parameters
   search(queryObj) {
     const item = userRepository.getOne(queryObj);
     return item ? item : null;
@@ -28,6 +29,6 @@ class UserService {
   }
 }
 
-const userService = new UserService();
+export const userService = new UserService();
 
-export { userService };
+// export { userService };

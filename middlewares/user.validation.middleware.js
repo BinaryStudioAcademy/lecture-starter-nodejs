@@ -1,6 +1,7 @@
 import { USER } from '../models/user.js';
 import { regex } from '../constants/regex.js';
 import { errorMessages } from '../constants/errorMessages.js';
+import { userService } from '../services/userService.js';
 
 const userKeys = Object.keys(USER);
 const indexOfId = userKeys.indexOf('id');
@@ -16,8 +17,7 @@ const createUserValid = (req, res, next) => {
 
   // Body is empty
   if (!bodyKeys.length) {
-    const message = errorMessages.emptyBody;
-    res.status(400).send({ message });
+    res.error = errorMessages.emptyBody;
     next();
   }
 
@@ -27,27 +27,36 @@ const createUserValid = (req, res, next) => {
   );
 
   if (!matches) {
-    const message = errorMessages.invalidData;
-    return res.status(400).json({ message });
+    res.error = errorMessages.invalidData;
+    next();
   }
 
   const { email, phoneNumber, password } = req.body;
 
   // Invalid email
   if (!regex.email.test(email)) {
-    const message = errorMessages.invalidEmail;
-    return res.status(400).json({ message });
+    res.error = errorMessages.invalidEmail;
+    next();
   }
 
   // Invalid phone number
   if (!regex.phoneNumber.test(phoneNumber)) {
-    const message = errorMessages.invalidPhone;
-    return res.status(400).json({ message });
+    res.error = errorMessages.invalidPhone;
+    next();
+  }
+
+  // Email or phone number already exists
+  const doesEmailExist = userService.search({ email });
+  const doesPhoneExist = userService.search({ phoneNumber });
+
+  if (doesEmailExist || doesPhoneExist) {
+    res.error = errorMessages.userExists;
+    next();
   }
 
   if (typeof password !== 'string' || password.length < 3) {
-    const message = errorMessages.invalidPass;
-    return res.status(400).json({ message });
+    res.error = errorMessages.invalidPass;
+    next();
   }
 
   next();
@@ -59,8 +68,7 @@ const updateUserValid = (req, res, next) => {
 
   // Body is empty
   if (!bodyKeys.length) {
-    const message = errorMessages.emptyBody;
-    res.status(400).send({ message });
+    res.error = errorMessages.emptyBody;
     next();
   }
 
@@ -70,23 +78,24 @@ const updateUserValid = (req, res, next) => {
   );
 
   if (!matches) {
-    const message = errorMessages.invalidData;
-    return res.status(400).json({ message });
+    res.error = errorMessages.invalidData;
+    next();
   }
 
   const { email, phoneNumber } = req.body;
 
   // Invalid email
   if (email && !regex.email.test(email)) {
-    const message = errorMessages.invalidEmail;
-    return res.status(400).json({ message });
+    res.error = errorMessages.invalidEmail;
+    next();
   }
 
   // Invalid phone number
   if (phoneNumber && !regex.phoneNumber.test(phoneNumber)) {
-    const message = errorMessages.invalidPhone;
-    return res.status(400).json({ message });
+    res.error = errorMessages.invalidPhone;
+    next();
   }
+
   next();
 };
 

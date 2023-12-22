@@ -1,17 +1,21 @@
-import { errorMessages } from '../constants/errorMessages.js';
-
-const responseMiddleware = (_, res, next) => {
+const responseMiddleware = (req, res) => {
   const errorObj = { error: true, message: '' };
 
-  // Помилки запиту (валідація, проблеми в обробці) — повернути статус 400 та JSON з помилкою
   if (res.error) {
-    console.log('res.error: ', res.error);
-    errorObj.message = res.error.message || errorMessages.registrationError;
-    return res.status(400).json(errorObj);
+    errorObj.message = res.error;
+    const is409 = res.error.includes('already exists');
+    const code = is409 ? 409 : 400;
+    return res.status(code).json(errorObj);
   }
 
   if (!res.data) {
-    errorObj.message = errorMessages.userNotFound;
+    const parsedBaseUrl = res.req.baseUrl.split('/');
+    const index = parsedBaseUrl.length - 1;
+    const collection = parsedBaseUrl[index];
+
+    const entity = collection === 'users' ? 'User' : 'Fighter';
+
+    errorObj.message = `${entity} not found`;
     return res.status(404).json(errorObj);
   }
 

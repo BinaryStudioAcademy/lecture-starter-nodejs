@@ -1,8 +1,8 @@
-import { BaseRepository } from "./baseRepository.js";
+import { BaseRepository } from './baseRepository.js';
 
 class UserRepository extends BaseRepository {
   constructor() {
-    super("users");
+    super('users');
   }
 }
 
