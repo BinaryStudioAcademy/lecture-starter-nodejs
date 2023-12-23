@@ -1,6 +1,8 @@
 import { decorator } from '../helpers/decorator.js';
 import { userService } from '../services/userService.js';
 
+// *********************************************************
+
 const getAll = (req, res) => {
   res.data = userService.getAllUsers();
 };
@@ -25,7 +27,9 @@ const remove = (req, res) => {
   res.data = userService.deleteUser(id);
 };
 
-export const controllers = {
+// *********************************************************
+
+export const userCtrl = {
   getAll: decorator(getAll),
   getCurrent: decorator(getCurrent),
   create: decorator(create),

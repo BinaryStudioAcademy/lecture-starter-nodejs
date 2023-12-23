@@ -3,12 +3,14 @@ import { regex } from '../constants/regex.js';
 import { errorMessages } from '../constants/errorMessages.js';
 import { userService } from '../services/userService.js';
 
+// *********************************************************
+
 const userKeys = Object.keys(USER);
 const indexOfId = userKeys.indexOf('id');
 const userSchema = [...userKeys];
 userSchema.splice(indexOfId, 1);
 
-// **********************************************
+// *********************************************************
 
 // New user validation
 const createUserValid = (req, res, next) => {
@@ -62,6 +64,8 @@ const createUserValid = (req, res, next) => {
   next();
 };
 
+// *********************************************************
+
 // Update user validation
 const updateUserValid = (req, res, next) => {
   const bodyKeys = Object.keys(req.body);
@@ -98,5 +102,7 @@ const updateUserValid = (req, res, next) => {
 
   next();
 };
+
+// *********************************************************
 
 export { createUserValid, updateUserValid };

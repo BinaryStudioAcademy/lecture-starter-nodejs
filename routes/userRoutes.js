@@ -1,26 +1,32 @@
 import { Router } from 'express';
+import { userCtrl } from '../controllers/userControllers.js';
 import {
   createUserValid,
   updateUserValid,
 } from '../middlewares/user.validation.middleware.js';
 import { responseMiddleware } from '../middlewares/response.middleware.js';
-import { controllers } from '../controllers/userControllers.js';
+
+// *********************************************************
 
 const router = Router();
 
+// *********************************************************
+
 // Get all users
-router.get('/', controllers.getAll, responseMiddleware);
+router.get('/', userCtrl.getAll, responseMiddleware);
 
 // Get current user
-router.get('/:id', controllers.getCurrent, responseMiddleware);
+router.get('/:id', userCtrl.getCurrent, responseMiddleware);
 
 // Register a new user
-router.post('/', createUserValid, controllers.create, responseMiddleware);
+router.post('/', createUserValid, userCtrl.create, responseMiddleware);
 
 // Edit user data
-router.put('/:id', updateUserValid, controllers.edit, responseMiddleware);
+router.put('/:id', updateUserValid, userCtrl.edit, responseMiddleware);
 
 // Delete an existing user
-router.delete('/:id', controllers.remove, responseMiddleware);
+router.delete('/:id', userCtrl.remove, responseMiddleware);
+
+// *********************************************************
 
 export { router };

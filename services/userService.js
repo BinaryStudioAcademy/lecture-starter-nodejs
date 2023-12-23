@@ -1,5 +1,7 @@
 import { userRepository } from '../repositories/userRepository.js';
 
+// *********************************************************
+
 class UserService {
   getAllUsers() {
     return userRepository.getAll();
@@ -24,7 +26,6 @@ class UserService {
   // Delete an existing user
   deleteUser(id) {
     const doesExist = this.search({ id });
-    console.log('doesExist: ', doesExist);
     if (!doesExist) return null;
 
     const [deletedUser] = userRepository.delete(id);
