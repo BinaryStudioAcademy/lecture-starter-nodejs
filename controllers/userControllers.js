@@ -1,40 +1,34 @@
+import { decorator } from '../helpers/decorator.js';
 import { userService } from '../services/userService.js';
 
-const getAll = (req, res, next) => {
+const getAll = (req, res) => {
   res.data = userService.getAllUsers();
-  next();
 };
 
-const getCurrent = (req, res, next) => {
+const getCurrent = (req, res) => {
   const { id } = req.params;
   res.data = userService.search({ id });
-  next();
 };
 
-const create = (req, res, next) => {
+const create = (req, res) => {
   if (!res.error) res.data = userService.register(req.body);
-
-  next();
 };
 
-const edit = (req, res, next) => {
+const edit = (req, res) => {
   const { id } = req.params;
   const data = req.body;
   res.data = userService.editUser(id, data);
-  next();
 };
 
-const remove = (req, res, next) => {
+const remove = (req, res) => {
   const { id } = req.params;
-  const result = userService.deleteUser(id);
-  res.data = result;
-  next();
+  res.data = userService.deleteUser(id);
 };
 
 export const controllers = {
-  getAll,
-  getCurrent,
-  create,
-  edit,
-  remove,
+  getAll: decorator(getAll),
+  getCurrent: decorator(getCurrent),
+  create: decorator(create),
+  edit: decorator(edit),
+  remove: decorator(remove),
 };

@@ -1,4 +1,4 @@
-const responseMiddleware = (req, res) => {
+export const responseMiddleware = (req, res) => {
   const errorObj = { error: true, message: '' };
 
   if (res.error) {
@@ -12,7 +12,7 @@ const responseMiddleware = (req, res) => {
     const index = parsedBaseUrl.length - 1;
     const collection = parsedBaseUrl[index];
 
-    const entity = collection === 'users' ? 'User' : 'Fighter';
+    const entity = collection === 'users' ? 'User' : 'Fighter'; // TODO: replace
 
     errorObj.message = `${entity} not found`;
     return res.status(404).json(errorObj);
@@ -20,5 +20,3 @@ const responseMiddleware = (req, res) => {
 
   return res.json(res.data); // '200 OK' is returned by default
 };
-
-export { responseMiddleware };
