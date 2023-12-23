@@ -6,6 +6,4 @@ class UserRepository extends BaseRepository {
   }
 }
 
-const userRepository = new UserRepository();
-
-export { userRepository };
+export const userRepository = new UserRepository();

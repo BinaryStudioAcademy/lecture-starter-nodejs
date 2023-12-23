@@ -1,5 +1,5 @@
 import { authService } from '../services/authService.js';
-import { decorator } from '../helpers/decorator.js';
+import { decorator } from '../decorators/decorator.js';
 
 // *********************************************************
 

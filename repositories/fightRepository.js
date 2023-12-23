@@ -1,11 +1,9 @@
-import { BaseRepository } from "./baseRepository.js";
+import { BaseRepository } from './baseRepository.js';
 
 class FightRepository extends BaseRepository {
   constructor() {
-    super("fights");
+    super('fights');
   }
 }
 
-const fightRepository = new FightRepository();
-
-export { fightRepository };
+export const fightRepository = new FightRepository();

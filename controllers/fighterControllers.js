@@ -1,4 +1,4 @@
-import { decorator } from '../helpers/decorator.js';
+import { decorator } from '../decorators/decorator.js';
 import { fighterService } from '../services/fighterService.js';
 
 // *********************************************************
