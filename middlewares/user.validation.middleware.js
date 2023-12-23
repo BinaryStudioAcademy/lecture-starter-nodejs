@@ -1,12 +1,13 @@
 import { USER } from '../models/user.js';
+import { userService } from '../services/userService.js';
 import { regex } from '../constants/regex.js';
 import { errorMessages } from '../constants/errorMessages.js';
-import { userService } from '../services/userService.js';
 
 // *********************************************************
 
 const userKeys = Object.keys(USER);
 const indexOfId = userKeys.indexOf('id');
+
 const userSchema = [...userKeys];
 userSchema.splice(indexOfId, 1);
 
@@ -29,7 +30,7 @@ const createUserValid = (req, res, next) => {
   );
 
   if (!matches) {
-    res.error = errorMessages.invalidData;
+    res.error = errorMessages.user.invalidData;
     next();
   }
 
@@ -37,13 +38,13 @@ const createUserValid = (req, res, next) => {
 
   // Invalid email
   if (!regex.email.test(email)) {
-    res.error = errorMessages.invalidEmail;
+    res.error = errorMessages.user.invalidEmail;
     next();
   }
 
   // Invalid phone number
   if (!regex.phoneNumber.test(phoneNumber)) {
-    res.error = errorMessages.invalidPhone;
+    res.error = errorMessages.user.invalidPhone;
     next();
   }
 
@@ -52,12 +53,12 @@ const createUserValid = (req, res, next) => {
   const doesPhoneExist = userService.search({ phoneNumber });
 
   if (doesEmailExist || doesPhoneExist) {
-    res.error = errorMessages.userExists;
+    res.error = errorMessages.user.userExists;
     next();
   }
 
   if (typeof password !== 'string' || password.length < 3) {
-    res.error = errorMessages.invalidPass;
+    res.error = errorMessages.user.invalidPass;
     next();
   }
 
@@ -72,7 +73,7 @@ const updateUserValid = (req, res, next) => {
 
   // Body is empty
   if (!bodyKeys.length) {
-    res.error = errorMessages.emptyBody;
+    res.error = errorMessages.user.emptyBody;
     next();
   }
 
@@ -82,7 +83,7 @@ const updateUserValid = (req, res, next) => {
   );
 
   if (!matches) {
-    res.error = errorMessages.invalidData;
+    res.error = errorMessages.user.invalidData;
     next();
   }
 
@@ -90,13 +91,13 @@ const updateUserValid = (req, res, next) => {
 
   // Invalid email
   if (email && !regex.email.test(email)) {
-    res.error = errorMessages.invalidEmail;
+    res.error = errorMessages.user.invalidEmail;
     next();
   }
 
   // Invalid phone number
   if (phoneNumber && !regex.phoneNumber.test(phoneNumber)) {
-    res.error = errorMessages.invalidPhone;
+    res.error = errorMessages.user.invalidPhone;
     next();
   }
 
