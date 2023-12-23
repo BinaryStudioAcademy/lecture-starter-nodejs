@@ -3,9 +3,8 @@ const responseMiddleware = (req, res) => {
 
   if (res.error) {
     errorObj.message = res.error;
-    const is409 = res.error.includes('already exists');
-    const code = is409 ? 409 : 400;
-    return res.status(code).json(errorObj);
+    const statusCode = res.error.includes('already exists') ? 409 : 400;
+    return res.status(statusCode).json(errorObj);
   }
 
   if (!res.data) {

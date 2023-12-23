@@ -11,14 +11,17 @@ class UserService {
     return item ? item : null;
   }
 
+  // Create a new user
   register(data) {
     return userRepository.create(data);
   }
 
+  // Edit an existing user
   editUser(id, dataToUpdate) {
     return userRepository.update(id, dataToUpdate);
   }
 
+  // Delete an existing user
   deleteUser(id) {
     const doesExist = this.search({ id });
     console.log('doesExist: ', doesExist);
@@ -30,5 +33,3 @@ class UserService {
 }
 
 export const userService = new UserService();
-
-// export { userService };
