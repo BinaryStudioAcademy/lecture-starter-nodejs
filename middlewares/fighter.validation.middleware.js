@@ -5,11 +5,12 @@ import { fighterService } from '../services/fighterService.js';
 // *********************************************************
 
 const fighterKeys = Object.keys(FIGHTER);
-const indexOfId = fighterKeys.indexOf('id');
-const indexOfHealth = fighterKeys.indexOf('health');
-
 const fighterSchema = [...fighterKeys];
+
+const indexOfId = fighterSchema.indexOf('id');
 fighterSchema.splice(indexOfId, 1);
+
+const indexOfHealth = fighterSchema.indexOf('health');
 fighterSchema.splice(indexOfHealth, 1);
 
 // *********************************************************

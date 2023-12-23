@@ -6,9 +6,9 @@ import { errorMessages } from '../constants/errorMessages.js';
 // *********************************************************
 
 const userKeys = Object.keys(USER);
-const indexOfId = userKeys.indexOf('id');
-
 const userSchema = [...userKeys];
+
+const indexOfId = userSchema.indexOf('id');
 userSchema.splice(indexOfId, 1);
 
 // *********************************************************

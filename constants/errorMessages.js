@@ -9,7 +9,7 @@ const userNotFound = 'User not found';
 const userExists = 'User already exists';
 
 // Fighter
-const invalidFighterData = 'Invalid user data';
+const invalidFighterData = 'Invalid fighter data';
 const invalidPower = 'Power must be a number from 1 to 100';
 const invalidDefense = 'Defense must be a number from 1 to 10';
 const invalidHealth = 'Health must be a number from 80 to 120 (default - 100)';
