@@ -2,8 +2,8 @@ export const responseMiddleware = (req, res) => {
   const errorObj = { error: true, message: '' };
 
   if (res.error) {
-    errorObj.message = res.error;
-    const statusCode = res.error.includes('already exists') ? 409 : 400;
+    errorObj.message = res.error.toString();
+    const statusCode = errorObj.message.includes('already exists') ? 409 : 400;
     return res.status(statusCode).json(errorObj);
   }
 
@@ -12,7 +12,7 @@ export const responseMiddleware = (req, res) => {
     const index = parsedBaseUrl.length - 1;
     const collection = parsedBaseUrl[index];
 
-    const entity = collection === 'users' ? 'User' : 'Fighter'; // TODO: replace
+    const entity = collection === 'users' ? 'User' : 'Fighter'; // TODO: make more future-proof
 
     errorObj.message = `${entity} not found`;
     return res.status(404).json(errorObj);
