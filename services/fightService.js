@@ -1,9 +1,22 @@
-import { fightRepository } from "../repositories/fightRepository.js";
+import { fightRepository } from '../repositories/fightRepository.js';
 
-class FightersService {
-  // OPTIONAL TODO: Implement methods to work with fights
+// *********************************************************
+
+class FightService {
+  getAllFights() {
+    return fightRepository.getAll();
+  }
+
+  // Search fights by one or more parameters
+  search(queryObj) {
+    const item = fightRepository.getOne(queryObj);
+    return item ? item : null;
+  }
+
+  // Create a new fight
+  save(data) {
+    return fightRepository.create(data);
+  }
 }
 
-const fightersService = new FightersService();
-
-export { fightersService };
+export const fightService = new FightService();

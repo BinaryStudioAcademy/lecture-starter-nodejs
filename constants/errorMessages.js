@@ -16,6 +16,9 @@ const invalidHealth = 'Health must be a number from 80 to 120 (default - 100)';
 const fighterNotFound = 'Fighter not found';
 const fighterExists = 'A fighter with this name already exists';
 
+// Fight
+const invalidFightData = 'Invalid fight data';
+
 // Exports
 export const errorMessages = {
   emptyBody: 'Request body is empty',
@@ -36,5 +39,9 @@ export const errorMessages = {
     invalidHealth,
     fighterNotFound,
     fighterExists,
+  },
+
+  fight: {
+    invalidFightData,
   },
 };
