@@ -19,8 +19,12 @@ class Fight extends React.Component {
 
   async componentDidMount() {
     const fighters = await getFighters();
+    const error = 'Connection with server failed. \nPlease try again later';
+
     if (fighters && !fighters.error) {
       this.setState({ fighters });
+    } else {
+      alert(error);
     }
   }
 
@@ -68,7 +72,6 @@ class Fight extends React.Component {
 
   render() {
     const { fighter1, fighter2, rivals } = this.state;
-    // const isReadyToFight = rivals.length === 2;
 
     if (rivals) {
       return <Arena rivals={rivals} />;
