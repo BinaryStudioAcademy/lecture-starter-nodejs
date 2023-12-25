@@ -9,7 +9,7 @@
     "test-local": "./node_modules/.bin/mocha tests/**/*.spec.js --exit -R JSON",
     "start": "node index.js",
     "start:dev": "nodemon index.js",
-    "build-front": "cd client | ls",
+    "build-front": "cd client && npm run build",
     "feedback": "node ./feedback/index.js",
     "generate": "npm run test-local | npm run feedback"
   },

@@ -1,8 +1,8 @@
-import cors from "cors";
-import express from "express";
-import { initRoutes } from "./routes/routes.js";
+import cors from 'cors';
+import express from 'express';
+import { initRoutes } from './routes/routes.js';
 
-import "./config/db.js";
+import './config/db.js';
 
 const app = express();
 
@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 
 initRoutes(app);
 
-app.use("/", express.static("./client/build"));
+app.use('/', express.static('./client/build'));
 
 const port = 3080;
 app.listen(port, () => {});
