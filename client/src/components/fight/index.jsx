@@ -76,7 +76,7 @@ class Fight extends React.Component {
   };
 
   onGameOver = () => {
-    this.setState({ rivals: null });
+    this.setState({ rivals: null, fighter1: null, fighter2: null });
   };
 
   // **************** Render ****************
