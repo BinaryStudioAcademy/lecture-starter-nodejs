@@ -42,7 +42,7 @@ class Arena extends Component {
     showModal: false,
   };
 
-  // **************** Lifecycle ****************
+  // ***********************
 
   componentDidMount() {
     this.events.forEach((eventType) =>
@@ -87,6 +87,8 @@ class Arena extends Component {
     if (winner) {
       this.setState({ winner });
       this.setState({ showModal: true });
+      // alert(`${winner} wins!`);
+      console.log(`${winner} wins!`);
     }
   }
 
@@ -96,7 +98,7 @@ class Arena extends Component {
     );
   }
 
-  // **************** Methods ****************
+  // ************************
 
   getChance(min, max) {
     return Math.random() * (max - min) + min;
@@ -216,7 +218,7 @@ class Arena extends Component {
 
       // Player 2 regular attack
       if (!playerTwoBlocks && code === PlayerTwoAttack) {
-        const damage = playerTwoBlocks
+        const damage = playerOneBlocks
           ? this.getDamage(playerTwo, playerOne)
           : this.getHitPower(playerTwo);
 
@@ -259,7 +261,9 @@ class Arena extends Component {
     }
   };
 
-  // **************** Render ****************
+  closeModal = () => {
+    this.setState({ showModal: false });
+  };
 
   render() {
     const { fighter1, fighter2 } = this.props.rivals;
@@ -267,7 +271,7 @@ class Arena extends Component {
 
     return (
       <div className="arena___root">
-        {showModal && <Modal winner={winner} onClose={this.props.onGameOver} />}
+        {showModal && <Modal winner={winner} onClose={this.closeModal} />}
 
         <div className="arena___fight-status">
           {/*  */}
@@ -318,5 +322,23 @@ class Arena extends Component {
     );
   }
 }
+
+// *******************************
+
+// class Arena extends Component {
+//   static playerOne = this.props?.rivals?.fighter1;
+//   static playerTwo = this.props?.rivals?.fighter2;
+
+//   componentDidMount() {
+//     console.log(this.props);
+//     console.log(this.props.rivals);
+//   }
+
+//   render() {
+//     return 'Arena';
+//   }
+// }
+
+// *******************************
 
 export default Arena;
