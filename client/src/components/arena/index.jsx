@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './arena.css';
 import controls from '../../constants/controls';
+import Modal from '../modal';
 
 const {
   PlayerOneAttack,
@@ -41,7 +42,7 @@ class Arena extends Component {
     showModal: false,
   };
 
-  // ***********************
+  // **************** Lifecycle ****************
 
   componentDidMount() {
     this.events.forEach((eventType) =>
@@ -86,8 +87,6 @@ class Arena extends Component {
     if (winner) {
       this.setState({ winner });
       this.setState({ showModal: true });
-      // alert(`${winner} wins!`);
-      console.log(`${winner} wins!`);
     }
   }
 
@@ -97,7 +96,7 @@ class Arena extends Component {
     );
   }
 
-  // ************************
+  // **************** Methods ****************
 
   getChance(min, max) {
     return Math.random() * (max - min) + min;
@@ -260,49 +259,55 @@ class Arena extends Component {
     }
   };
 
+  // **************** Render ****************
+
   render() {
     const { fighter1, fighter2 } = this.props.rivals;
-
-    if (this.showModal) return 'Fight is over';
+    const { showModal, winner } = this.state;
 
     return (
-      <div class="arena___root">
-        <div class="arena___fight-status">
+      <div className="arena___root">
+        {showModal && <Modal winner={winner} onClose={this.props.onGameOver} />}
+
+        <div className="arena___fight-status">
           {/*  */}
-          <div class="arena___fighter-indicator">
-            <span class="arena___fighter-name">{fighter1.name}</span>
-            <div class="arena___health-indicator">
-              <div class="arena___health-bar" id="left-fighter-indicator"></div>
+          <div className="arena___fighter-indicator">
+            <span className="arena___fighter-name">{fighter1.name}</span>
+            <div className="arena___health-indicator">
+              <div
+                className="arena___health-bar"
+                id="left-fighter-indicator"
+              ></div>
             </div>
           </div>
 
-          <div class="arena___versus-sign"></div>
+          <div className="arena___versus-sign"></div>
 
-          <div class="arena___fighter-indicator">
-            <span class="arena___fighter-name">{fighter2.name}</span>
-            <div class="arena___health-indicator">
+          <div className="arena___fighter-indicator">
+            <span className="arena___fighter-name">{fighter2.name}</span>
+            <div className="arena___health-indicator">
               <div
-                class="arena___health-bar"
+                className="arena___health-bar"
                 id="right-fighter-indicator"
               ></div>
             </div>
           </div>
         </div>
 
-        <div class="arena___battlefield">
+        <div className="arena___battlefield">
           {/*  */}
-          <div class="arena___fighter arena___left-fighter">
+          <div className="arena___fighter arena___left-fighter">
             <img
-              class="fighter-preview___img"
+              className="fighter-preview___img"
               src={fighter1.source}
               title={fighter1.name}
               alt={fighter1.name}
             />
           </div>
 
-          <div class="arena___fighter arena___right-fighter">
+          <div className="arena___fighter arena___right-fighter">
             <img
-              class="fighter-preview___img"
+              className="fighter-preview___img"
               src={fighter2.source}
               title={fighter2.name}
               alt={fighter2.name}
@@ -313,23 +318,5 @@ class Arena extends Component {
     );
   }
 }
-
-// *******************************
-
-// class Arena extends Component {
-//   static playerOne = this.props?.rivals?.fighter1;
-//   static playerTwo = this.props?.rivals?.fighter2;
-
-//   componentDidMount() {
-//     console.log(this.props);
-//     console.log(this.props.rivals);
-//   }
-
-//   render() {
-//     return 'Arena';
-//   }
-// }
-
-// *******************************
 
 export default Arena;

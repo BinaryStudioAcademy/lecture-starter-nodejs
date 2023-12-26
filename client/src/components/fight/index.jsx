@@ -91,11 +91,16 @@ class Fight extends React.Component {
     return fighters.filter((it) => it.id !== fighter1.id);
   };
 
+  onGameOver = () => {
+    this.setState({ rivals: null });
+  };
+
+  // ****************************************************
   render() {
     const { fighter1, fighter2, rivals } = this.state;
 
     if (rivals) {
-      return <Arena rivals={rivals} />;
+      return <Arena rivals={rivals} onGameOver={this.onGameOver} />;
     }
 
     return (
