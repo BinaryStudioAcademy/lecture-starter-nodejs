@@ -99,37 +99,6 @@ class Arena extends Component {
 
   // ************************
 
-  healthIndicatorUpdater = (player, damage) => {
-    //
-    const playerNo = player === this.playerOne ? 'playerOne' : 'playerTwo';
-    const playerSide = player === this.playerOne ? 'left' : 'right';
-
-    const playerHealthKey = `${playerNo}Health`;
-    const playerInitialHealthKey = `${playerNo}InitialHealth`;
-
-    const playerHealth = this.state[playerHealthKey];
-    const playerInitialHealth = this[playerInitialHealthKey];
-
-    const playerHealthBar = document.querySelector(
-      `#${playerSide}-fighter-indicator`
-    );
-
-    // **********************
-
-    if (playerHealth > 0) {
-      this.setState((prevState) => {
-        return { [playerHealthKey]: (prevState[playerHealthKey] -= damage) };
-      });
-
-      //   playerHealthBar.style.width = `${
-      //     ((playerHealth - damage) * 100) / playerInitialHealth
-      //   }%`;
-      // } else {
-      //   playerHealthBar.style.width = '0%';
-      // }
-    }
-  };
-
   getChance(min, max) {
     return Math.random() * (max - min) + min;
   }
