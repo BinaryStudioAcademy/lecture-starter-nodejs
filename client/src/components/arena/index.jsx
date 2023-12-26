@@ -216,7 +216,7 @@ class Arena extends Component {
 
       // Player 2 regular attack
       if (!playerTwoBlocks && code === PlayerTwoAttack) {
-        const damage = playerTwoBlocks
+        const damage = playerOneBlocks
           ? this.getDamage(playerTwo, playerOne)
           : this.getHitPower(playerTwo);
 
