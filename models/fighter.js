@@ -1,9 +1,7 @@
-const FIGHTER = {
-  id: "",
-  name: "",
-  health: 100,
-  power: 0,
+export const FIGHTER = {
+  id: '',
+  name: '', // unique
+  health: 100, // 80 to 120
+  power: 0, // 1 to 100
   defense: 1, // 1 to 10
 };
-
-export { FIGHTER };
