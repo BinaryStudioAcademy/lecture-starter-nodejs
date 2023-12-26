@@ -13,6 +13,14 @@ const getCurrent = (req, res) => {
 };
 
 const create = (req, res) => {
+  const { health, source } = req.body;
+  if (!health) {
+    req.body.health = 100;
+  }
+  if (!source) {
+    req.body.source = 'https://media.giphy.com/media/kdHa4JvihB2gM/giphy.gif';
+  }
+
   if (!res.error) res.data = fighterService.createFighter(req.body);
 };
 
