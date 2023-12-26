@@ -15,15 +15,14 @@ const {
 
 class Arena extends Component {
   //
-  static playerOne = this.props.rivals.fighter1;
-  static playerTwo = this.props.rivals.fighter2;
+  playerOne = this.props.rivals.fighter1;
+  playerTwo = this.props.rivals.fighter2;
 
-  static playerOneInitialHealth = this.props.rivals.fighter1.health;
-  static playerTwoInitialHealth = this.props.rivals.fighter2.health;
+  playerOneInitialHealth = this.playerOne.health;
+  playerTwoInitialHealth = this.playerTwo.health;
 
-  static coolDownInterval = 10000;
-
-  static events = ['keydown', 'keyup'];
+  coolDownInterval = 10000;
+  events = ['keydown', 'keyup'];
 
   state = {
     pressedCombo1Keys: [],
@@ -35,8 +34,8 @@ class Arena extends Component {
     playerOneBlocks: false,
     playerTwoBlocks: false,
 
-    playerOneHealth: this.playerOne.health,
-    playerTwoHealth: this.playerTwo.health,
+    playerOneHealth: this.playerOneInitialHealth,
+    playerTwoHealth: this.playerTwoInitialHealth,
 
     winner: null,
     showModal: false,
@@ -45,22 +44,50 @@ class Arena extends Component {
   // ***********************
 
   componentDidMount() {
-    events.forEach((eventType) =>
+    this.events.forEach((eventType) =>
       document.addEventListener(eventType, this.keyPressHandler)
     );
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(_, prevState) {
     const { playerOneHealth, playerTwoHealth } = this.state;
+
+    const playerOneHealthBar = document.querySelector(
+      `#left-fighter-indicator`
+    );
+    const playerTwoHealthBar = document.querySelector(
+      `#right-fighter-indicator`
+    );
+
     let winner = null;
 
-    if (playerOneHealth <= 0) winner = this.playerTwo.name;
-    if (playerTwoHealth <= 0) winner = this.playerOne.name;
+    if (prevState.playerOneHealth !== playerOneHealth) {
+      if (playerOneHealth > 0) {
+        playerOneHealthBar.style.width = `${
+          (playerOneHealth * 100) / this.playerOneInitialHealth
+        }%`;
+      } else {
+        playerOneHealthBar.style.width = '0%';
+        winner = this.playerTwo.name;
+      }
+    }
+
+    if (prevState.playerTwoHealth !== playerTwoHealth) {
+      if (playerTwoHealth > 0) {
+        playerTwoHealthBar.style.width = `${
+          (playerTwoHealth * 100) / this.playerTwoInitialHealth
+        }%`;
+      } else {
+        playerTwoHealthBar.style.width = '0%';
+        winner = this.playerOne.name;
+      }
+    }
 
     if (winner) {
       this.setState({ winner });
       this.setState({ showModal: true });
-      alert(`${winner} wins!`);
+      // alert(`${winner} wins!`);
+      console.log(`${winner} wins!`);
     }
   }
 
@@ -70,7 +97,7 @@ class Arena extends Component {
     );
   }
 
-  // ************************8
+  // ************************
 
   healthIndicatorUpdater = (player, damage) => {
     //
@@ -81,7 +108,7 @@ class Arena extends Component {
     const playerInitialHealthKey = `${playerNo}InitialHealth`;
 
     const playerHealth = this.state[playerHealthKey];
-    const playerInitialHealth = this.state[playerInitialHealthKey];
+    const playerInitialHealth = this[playerInitialHealthKey];
 
     const playerHealthBar = document.querySelector(
       `#${playerSide}-fighter-indicator`
@@ -94,11 +121,12 @@ class Arena extends Component {
         return { [playerHealthKey]: (prevState[playerHealthKey] -= damage) };
       });
 
-      playerHealthBar.style.width = `${
-        (playerHealth * 100) / playerInitialHealth
-      }%`;
-    } else {
-      playerHealthBar.style.width = '0%';
+      //   playerHealthBar.style.width = `${
+      //     ((playerHealth - damage) * 100) / playerInitialHealth
+      //   }%`;
+      // } else {
+      //   playerHealthBar.style.width = '0%';
+      // }
     }
   };
 
@@ -108,7 +136,7 @@ class Arena extends Component {
 
   getHitPower(player) {
     const criticalHitChance = this.getChance(1, 2);
-    const hitPower = player.power * criticalHitChance;
+    const hitPower = (player.power / 10) * criticalHitChance;
 
     return hitPower;
   }
@@ -213,7 +241,9 @@ class Arena extends Component {
           ? this.getDamage(playerOne, playerTwo)
           : this.getHitPower(playerOne);
 
-        this.healthIndicatorUpdater(playerTwo, damage);
+        this.setState((prevState) => {
+          return { playerTwoHealth: prevState.playerTwoHealth - damage };
+        });
       }
 
       // Player 2 regular attack
@@ -222,7 +252,9 @@ class Arena extends Component {
           ? this.getDamage(playerTwo, playerOne)
           : this.getHitPower(playerTwo);
 
-        this.healthIndicatorUpdater(playerOne, damage);
+        this.setState((prevState) => {
+          return { playerOneHealth: prevState.playerOneHealth - damage };
+        });
       }
 
       // Blocks
@@ -261,6 +293,8 @@ class Arena extends Component {
 
   render() {
     const { fighter1, fighter2 } = this.props.rivals;
+
+    if (this.showModal) return 'Fight is over';
 
     return (
       <div class="arena___root">
@@ -310,5 +344,23 @@ class Arena extends Component {
     );
   }
 }
+
+// *******************************
+
+// class Arena extends Component {
+//   static playerOne = this.props?.rivals?.fighter1;
+//   static playerTwo = this.props?.rivals?.fighter2;
+
+//   componentDidMount() {
+//     console.log(this.props);
+//     console.log(this.props.rivals);
+//   }
+
+//   render() {
+//     return 'Arena';
+//   }
+// }
+
+// *******************************
 
 export default Arena;
