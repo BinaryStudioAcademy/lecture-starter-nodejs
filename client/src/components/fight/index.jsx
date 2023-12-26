@@ -1,53 +1,37 @@
 import React from 'react';
 
-// import { getFighters } from '../../services/domainRequest/fightersRequest';
+import { getFighters } from '../../services/domainRequest/fightersRequest';
 import NewFighter from '../newFighter';
 import Fighter from '../fighter';
 import { Button } from '@material-ui/core';
 import './fight.css';
 import Arena from '../arena';
 
-const player1 = {
-  name: 'Ryu',
-  power: 100,
-  defense: 10,
-  health: 100,
-  id: '6f56b2a5-c61d-42a5-9f00-bde97fa67494',
-  createdAt: '2023-12-23T22:46:48.413Z',
-  source: 'https://media.giphy.com/media/kdHa4JvihB2gM/giphy.gif',
-};
-
-const player2 = {
-  name: 'Dhalsim',
-  power: 80,
-  defense: 10,
-  health: 80,
-  id: 'e1162c5d-b7ba-4a14-88f7-313b61326f7e',
-  createdAt: '2023-12-24T11:12:28.283Z',
-  source:
-    'https://i.pinimg.com/originals/c0/53/f2/c053f2bce4d2375fee8741acfb35d44d.gif',
-};
+// ******************************************
 
 class Fight extends React.Component {
   state = {
     fighters: [],
     fighter1: null,
     fighter2: null,
-    // rivals: null,
-    rivals: { fighter1: player1, fighter2: player2 },
+    rivals: null,
     fightStarted: false,
   };
 
-  // async componentDidMount() {
-  //   const fighters = await getFighters();
-  //   const error = 'Connection with server failed. \nPlease try again later';
+  //  **************** Lifecycle ****************
 
-  //   if (fighters && !fighters.error) {
-  //     this.setState({ fighters });
-  //   } else {
-  //     alert(error);
-  //   }
-  // }
+  async componentDidMount() {
+    const fighters = await getFighters();
+    const error = 'Connection with server failed. \nPlease try again later';
+
+    if (fighters && !fighters.error) {
+      this.setState({ fighters });
+    } else {
+      alert(error);
+    }
+  }
+
+  // **************** Methods ****************
 
   onFightStart = () => {
     const { fighter1, fighter2 } = this.state;
@@ -95,7 +79,8 @@ class Fight extends React.Component {
     this.setState({ rivals: null });
   };
 
-  // ****************************************************
+  // **************** Render ****************
+
   render() {
     const { fighter1, fighter2, rivals } = this.state;
 

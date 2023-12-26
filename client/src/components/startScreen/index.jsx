@@ -6,8 +6,7 @@ import SignOut from '../signOut';
 
 class StartScreen extends React.Component {
   state = {
-    // isSignedIn: false,
-    isSignedIn: true,
+    isSignedIn: false,
   };
 
   componentDidMount() {
@@ -21,8 +20,7 @@ class StartScreen extends React.Component {
   render() {
     const { isSignedIn } = this.state;
 
-    if (false) {
-      // if (!isSignedIn) {
+    if (!isSignedIn) {
       return <SignInUpPage setIsLoggedIn={this.setIsLoggedIn} />;
     }
 
