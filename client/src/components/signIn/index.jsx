@@ -8,40 +8,54 @@ import { login } from '../../services/domainRequest/auth';
 import { setLoginSession } from '../../services/authService';
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        '& > *': {
-            margin: theme.spacing(1),
-            width: '25ch',
-        },
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+      width: '25ch',
     },
+  },
 }));
 
 export default function SignIn({ setIsLoggedIn }) {
-    const classes = useStyles();
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
+  const classes = useStyles();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
 
-    const onEmailChange = (event) => {
-        setEmail(event.target.value);
+  const onEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const onPasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const onSubmit = async () => {
+    const data = await login({ email, password });
+
+    if (data && !data.error) {
+      setLoginSession(data);
+      setIsLoggedIn(true);
     }
+  };
 
-    const onPasswordChange = (event) => {
-        setPassword(event.target.value);
-    }
-
-    const onSubmit = async () => {
-        const data = await login({ email, password });
-        if(data && !data.error) {
-            setLoginSession(data);
-            setIsLoggedIn(true);
-        }
-    }
-
-    return (
-        <form className={classes.root} noValidate autoComplete="off">
-            <TextField onChange={onEmailChange} id="standard-basic" label="Standard" placeholder="Email"/>
-            <TextField onChange={onPasswordChange} id="standard-basic" label="Standard" placeholder="Password" type="password"/>
-            <Button onClick={onSubmit} variant="contained" color="primary">Sign In</Button>
-        </form>
-    )
+  return (
+    <form className={classes.root} noValidate autoComplete="off">
+      <TextField
+        onChange={onEmailChange}
+        id="standard-basic"
+        label="Standard"
+        placeholder="Email"
+      />
+      <TextField
+        onChange={onPasswordChange}
+        id="standard-basic"
+        label="Standard"
+        placeholder="Password"
+        type="password"
+      />
+      <Button onClick={onSubmit} variant="contained" color="primary">
+        Sign In
+      </Button>
+    </form>
+  );
 }
