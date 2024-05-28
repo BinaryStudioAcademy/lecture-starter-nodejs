@@ -8,8 +8,8 @@ export const post = async (entityName, body) => {
     return await makeRequest(entityName, 'POST', body);
 }
 
-export const put = async (entityName, id, body) => {
-    return await makeRequest(`${entityName}/${id}`, 'PUT', body);
+export const patch = async (entityName, id, body) => {
+    return await makeRequest(`${entityName}/${id}`, 'PATCH', body);
 }
 
 export const deleteReq = async (entityName, id) => {
