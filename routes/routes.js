@@ -3,6 +3,7 @@ import { router as authRoutes } from "./authRoutes.js";
 import { router as fighterRoutes } from "./fighterRoutes.js";
 import { router as fightRoutes } from "./fightRoutes.js";
 import { loggerMiddleware } from "../middlewares/logger.middleware.js";
+import { responseMiddleware } from "../middlewares/response.middleware.js";
 
 const initRoutes = (app) => {
   app.use(loggerMiddleware);
@@ -10,6 +11,7 @@ const initRoutes = (app) => {
   app.use("/api/fighters", fighterRoutes);
   app.use("/api/fights", fightRoutes);
   app.use("/api/auth", authRoutes);
+  app.use(responseMiddleware);
 };
 
 export { initRoutes };
