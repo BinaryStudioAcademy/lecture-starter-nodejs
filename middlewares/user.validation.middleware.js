@@ -1,4 +1,4 @@
-import { USER } from "../models/user.js";
+import { MESSAGES } from "../constants/response.messages.js";
 import { CustomError } from "../types/CustomError.js";
 import {
   checkAtLeastOneParamExist,
@@ -19,7 +19,7 @@ const createUserValid = (req, res, next) => {
     return next();
   }
   const paramsEroor = new CustomError(
-    "Missing body parameters. Required: firstName, lastName, email, phoneNumber, password",
+    MESSAGES.USER_MESSAGES.ERROR_USER_VALIDATION_MIDDLEWARE,
     400
   );
   return next(paramsEroor);
@@ -34,7 +34,7 @@ const updateUserValid = (req, res, next) => {
     return next();
   }
   const requestedDataError = new CustomError(
-    "Requested data is not found",
+    MESSAGES.GENERIC_EMPTY_REQUEST_ERROR,
     404
   );
   return next(requestedDataError);
