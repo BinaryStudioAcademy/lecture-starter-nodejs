@@ -10,4 +10,6 @@ const router = Router();
 
 // TODO: Implement route controllers for user
 
+router.post("/", createUserValid, async (req, res) => {});
+
 export { router };
