@@ -22,10 +22,19 @@ const response422 = (req, res, next) => {
   }
 };
 
+const response401 = (req, res, next) => {
+  if (res?.isError401) {
+    res.status(401).json({ error: true, message: res.err.message });
+  } else {
+    next();
+  }
+}
+
 const responseMiddleware = [
   response404,
   response400,
   response422,
+  response401,
   (req, res, next) => {
     res.status(200).json(res.data);
     next();
