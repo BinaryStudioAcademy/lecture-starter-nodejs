@@ -10,6 +10,26 @@ class UserService {
     }
     return item;
   }
+
+  getAllUsers() {
+    return userRepository.getAll();
+  }
+
+  createUser(data) {
+    const newUser = userRepository.create(data);
+
+    return newUser;
+  }
+
+  updateUser(id, dataToUpdate) {
+    const updatedUser = userRepository.update(id, dataToUpdate);
+
+    return updatedUser;
+  }
+
+  deleteUser(id) {
+    userRepository.delete(id);
+  }
 }
 
 const userService = new UserService();
