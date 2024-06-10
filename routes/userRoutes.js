@@ -52,9 +52,10 @@ router.post(
         throw new Error(res.message);
       }
 
-      const checkUser = userService.search({ email: req.body.email });
+      const checkUserEmail = userService.search({ email: req.body.email });
+      const checkUserPhone = userService.search({ phoneNumber: req.body.phoneNumber });
 
-      if (checkUser) {
+      if (checkUserEmail || checkUserPhone) {
         throw new Error("User already exists");
       }
 
@@ -70,8 +71,8 @@ router.post(
   responseMiddleware
 );
 
-// PUT /users/:id
-router.put(
+// PATCH /users/:id
+router.patch(
   "/:id",
   updateUserValid,
   (req, res, next) => {

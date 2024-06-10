@@ -4,14 +4,17 @@ import { userService } from "../services/userService.js";
 const createUserValid = (req, res, next) => {
   // TODO: Implement validatior for USER entity during creation
   try {
+    const { email, phoneNumber, password } = USER;
+    const user = { email, phoneNumber, password, ...req.body };
+
     switch (true) {
-      case !validateEmail(req.body.email):
+      case !validateEmail(user.email):
         throw new Error("Email is not valid");
         break;
-      case !validatePhoneNumber(req.body.phoneNumber):
+      case !validatePhoneNumber(user.phoneNumber):
         throw new Error("Phone number is not valid");
         break;
-      case !validatePassword(req.body.password):
+      case !validatePassword(user.password):
         throw new Error("Password is not valid");
         break;
       default:
