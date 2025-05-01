@@ -13,4 +13,4 @@ npm install
 npm start
 ```
 
-Open [http://localhost:3333](http://localhost:3333)
+Open [http://localhost:3050](http://localhost:3050)
