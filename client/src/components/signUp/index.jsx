@@ -21,7 +21,7 @@ export default function SignUp({ setIsLoggedIn }) {
     const [password, setPassword] = useState();
     const [firstName, setFirstName] = useState();
     const [lastName, setLastName] = useState();
-    const [phoneNumber, setPhoneNumber] = useState();
+    const [phone, setPhoneNumber] = useState();
 
     const onEmailChange = (event) => {
         setEmail(event.target.value);
@@ -45,7 +45,7 @@ export default function SignUp({ setIsLoggedIn }) {
     
 
     const onSubmit = async () => {
-        const data = await createUser({ email, password, firstName, lastName, phoneNumber });
+        const data = await createUser({ email, password, firstName, lastName, phone });
         if(data && !data.error) {
             setLoginSession(data);
             setIsLoggedIn(true);
