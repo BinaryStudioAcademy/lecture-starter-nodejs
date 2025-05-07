@@ -1,9 +1,13 @@
 {
   "name": "nodejs-hometask",
-  "version": "0.0.1",
-  "description": "Hometask for NodeJS and express lecture",
+  "version": "0.1.1",
+  "description": "Node JS lecture starter",
   "main": "index.js",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BinaryStudioAcademy/lecture-starter-nodejs.git"
+  },
   "scripts": {
     "test": "sh -c 'env REPO_URL=$0 npx mocha tests/**/*.spec.js -R JSON --exit'",
     "test-local": "./node_modules/.bin/mocha tests/**/*.spec.js --exit -R JSON",
