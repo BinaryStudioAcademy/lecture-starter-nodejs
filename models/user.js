@@ -3,8 +3,8 @@ const USER = {
   firstName: "",
   lastName: "",
   email: "",
-  phoneNumber: "",
-  password: "", // min 3 symbols
+  phone: "",
+  password: "", // min 4 symbols
 };
 
 export { USER };
