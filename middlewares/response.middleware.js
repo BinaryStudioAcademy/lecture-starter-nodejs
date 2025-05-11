@@ -5,7 +5,7 @@ const responseMiddleware = (req, res, next) => {
     const { message } = res.err;
     console.log("message", message);
     return res.json({
-      error: true,
+      error: true, 
       message,
     });
   }

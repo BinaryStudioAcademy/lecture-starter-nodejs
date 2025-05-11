@@ -1,18 +1,17 @@
 import { Router } from "express";
-import { fighterService } from "../services/fighterService.js";
+import { fightsService } from "../services/fightService.js";
 import {
-  createFighterValid,
-  updateFighterValid,
-} from "../middlewares/fighter.validation.middleware.js";
+  createFightValid,
+  updateFightValid,
+} from "../middlewares/fight.validation.middleware.js";
+
 const router = Router();
 
 // OPTIONAL TODO: Implement route controller for fights
-
 router.get("/", async (req, res, next) => {
   try {
-    const storedFighters = await fighterService.getAllFighters();
-    res.body = storedFighters;
-    return next();
+    const fights = await fightsService.getAllFights();
+    return res.json(fights);
   } catch (error) {
     return next(error);
   }
@@ -20,51 +19,35 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:id", async (req, res, next) => {
   try {
-    const id = req.params.id;
-    const requestedFighter = await fighterService.searchById(id);
-    res.body = requestedFighter;
-    return next();
+    const fight = await fightsService.getOneFight({ id: req.params.id });
+    if (!fight) {
+      return res.status(404).json({ message: "Fight not found" });
+    }
+    return res.json(fight);
   } catch (error) {
     return next(error);
   }
 });
 
-router.post("/", createFighterValid, async (req, res, next) => {
+router.post("/", createFightValid, (req, res, next) => {
+  const { fighter1, fighter2 } = req.body;
   try {
-    const { name, power, defense, health } = req.body;
-    const newFighter = await fighterService.createFighter({
-      name,
-      power,
-      defense,
-      health,
-    });
-    res.body = newFighter;
-    return next();
+    const fightCreated = fightsService.createFight(fighter1, fighter2);
+    return res.status(201).json(fightCreated);
   } catch (error) {
     return next(error);
   }
 });
 
-router.delete("/:id", async (req, res, next) => {
+router.patch("/:id/log", updateFightValid, (req, res, next) => {
+  const id = req.params.id;
   try {
-    const id = req.params.id;
-    const deletedFighter = await fighterService.deleteFighterById(id);
-    res.body = deletedFighter;
-    return next();
+    const fightUpdated = fightsService.updateFight(id, req.body);
+    return res.json(fightUpdated);
   } catch (error) {
     return next(error);
   }
 });
 
-router.patch("/:id", updateFighterValid, async (req, res, next) => {
-  try {
-    const id = req.params.id;
-    const updatedFighter = await fighterService.updateFighter(id, req.body);
-    res.body = updatedFighter;
-    return next();
-  } catch (error) {
-    return next(error);
-  }
-});
 
 export { router };

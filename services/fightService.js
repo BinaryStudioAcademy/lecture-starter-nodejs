@@ -1,78 +1,43 @@
-import { MESSAGES } from "../constants/response.messages.js";
-import { castValuesToNumber } from "../helpers/services.helper.js";
 import { fightRepository } from "../repositories/fightRepository.js";
-import { CustomError } from "../CustomError.js";
-import { fighterService } from "./fighterService.js";
 
-class FightersService {
-  // OPTIONAL TODO: Implement methods to work with fights
+class FightService {
+  async getAllFights() {
+    const fights = await fightRepository.getAll();
+    return fights || [];
+  }
+
+  async getOneFight(search) {
+    const fight = await fightRepository.getOne(search);
+    return fight || null;
+  }
+
+  async createFight(fighter1, fighter2, log = []) {
+    console.log("log before saving:", log);
+    
+    const newFight = {
+      fighter1,
+      fighter2,
+      log,
+      createdAt: new Date(),
+    };
   
-  async searchById(id) {
-    const item = await fightRepository.getOne(id);
-    if (!item) {
-      throw new CustomError(
-        `${MESSAGES.FIGHT_MESSAGES.ERROR_FIGHT_NOT_FOUND} Id:${id}`,
-        404
-      );
-    }
-    return item;
+    const fight = await fightRepository.create(newFight);
+    console.log("Fight saved:", fight);
+  
+    return fight || null;
   }
 
-  async checkFighterExistence(fighterId) {
-    try {
-      const foundFighter = await fighterService.searchById({ id: fighterId });
-      if (!foundFighter) {
-        throw new Error(`No fighter found with id: ${fighterId}`);
-      }
-    } catch (error) {
-      throw new CustomError(
-        `${MESSAGES.FIGHT_MESSAGES.ERROR_FIGHTER_NOT_FOUND} ${fighterId}`,
-        404
-      );
-    }
+  async updateFight(id, body) {
+    const fight = await fightRepository.update(id, body);
+    return fight || null;
   }
 
-  async createFight(fighter1, fighter2) {
-    await this.checkFighterExistence(fighter1);
-    await this.checkFighterExistence(fighter2);
-
-    try {
-      const newFight = await fightRepository.create({
-        fighter1,
-        fighter2,
-        log: [],
-      });
-      return newFight;
-    } catch (error) {
-      throw new CustomError(
-        MESSAGES.FIGHTER_MESSAGES.UNEXPECTED_FIGHTER_CREATING,
-        500
-      );
-    }
-  }
-
-  async updateFight(id, data) {
-    try {
-      const currentFight = await this.searchById({ id });
-
-      const newLog = [{
-        fighter1Shot: castValuesToNumber(data.fighter1Shot),
-        fighter2Shot: castValuesToNumber(data.fighter2Shot),
-        fighter1Health: castValuesToNumber(data.fighter1Health),
-        fighter2Health: castValuesToNumber(data.fighter2Health),
-      }];
-
-      const updatedFight = await fightRepository.update(id, {
-        ...currentFight,
-        log: [...currentFight.log, ...newLog],
-      });
-
-      return updatedFight;
-    } catch (error) {
-      throw error;
-    }
+  async deleteFight(id) {
+    const fight = await fightRepository.delete(id);
+    return fight || null;
   }
 }
 
-const fightsService = new FightersService();
+const fightsService = new FightService();
+
 export { fightsService };
