@@ -15,6 +15,8 @@ initRoutes(app);
 app.use("/", express.static("./client/build"));
 
 const port = 3050;
-app.listen(port, () => {});
+app.listen(port, () => {
+	console.log(`Server running on http://localhost:${port}`);
+});
 
 export { app };

@@ -9,7 +9,17 @@ router.post(
   (req, res, next) => {
     try {
       // TODO: Implement login action (get the user if it exist with entered credentials)
+      const data = authService.login(req.body);
+      if (!data) {
+        throw new Error({
+          code: 401,
+          status: "Unauthorized",
+          message: "Incorrect email/phone or password",
+        });
+      }
+
       res.data = data;
+      res.status(200);
     } catch (err) {
       res.err = err;
     } finally {
@@ -18,5 +28,4 @@ router.post(
   },
   responseMiddleware
 );
-
 export { router };
